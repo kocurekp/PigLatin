@@ -6,7 +6,7 @@ if (!empty($input)) {
 	$vowels = array("a", "e", "i", "o", "u");
 	$silentWords = array();
 	$justAddEy = false;		//determines, if input word needs cutting
-	$suffix = "ay";		
+	$suffix = "'way";		
 
 	$file = fopen("silentWords.txt","r");	//load silent words from file
 	while(! feof($file))
@@ -16,7 +16,7 @@ if (!empty($input)) {
 	}
 
 	foreach($silentWords as $item){		//check usual words that starts with silent letter
-		if (strcmp($item, $input)) {
+		if (strcmp($item, $input) == 2) {
 			$justAddEy = true;
 		}
 	}
