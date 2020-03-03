@@ -1,3 +1,4 @@
+//allows submitting form without page refresh
 function SubmitForm(){
 	var input = $("input").val();
 	$.post("translate.php", {input: input},
