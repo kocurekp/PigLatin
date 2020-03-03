@@ -1,15 +1,27 @@
 <?php
 $input = strtolower($_POST['input']);	//load input, change to lowercase
+$result = "-";	//initialize empty value
 
 if (!empty($input)) {
 	$vowels = array("a", "e", "i", "o", "u");
-	$silentCons = array("p", "k", "h", "g", "w"); //phone, knife, honest, gnome, whole
-	$validChars = array_merge($vowels, $silentCons);
+	$silentWords = array();
 	$justAddEy = false;		//determines, if input word needs cutting
 	$suffix = "ay";		
-	$result = "-";	//initialize empty value
 
-	foreach($validChars as $char){	//check first char of input
+	$file = fopen("silentWords.txt","r");	//load silent words from file
+	while(! feof($file))
+	{
+		$word = fgets($file, 4096);
+		array_push($silentWords, $word);	//store into array
+	}
+
+	foreach($silentWords as $item){		//check usual words that starts with silent letter
+		if (strcmp($item, $input)) {
+			$justAddEy = true;
+		}
+	}
+
+	foreach($vowels as $char){	//check first char of input
 		if ($char == $input[0]) {
 			$justAddEy = true;
 		}
@@ -20,5 +32,5 @@ if (!empty($input)) {
 	}
 
 	echo $result;	//print translated word
-}else echo "-";
+}else echo $result;
 ?>
