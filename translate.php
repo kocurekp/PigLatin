@@ -1,10 +1,10 @@
 <?php
 $input = strtolower($_POST['input']);	//load input, change to lowercase
-$output = "";	//initialize empty value
+$output = "&nbsp";	//initialize empty value
 
-
+//load silent words from file, there is not an easy way to determine when consonants are silent
 function LoadSilentWords(&$silentWords){
-	$file = fopen("silentWords.txt","r");	//load silent words from file, there is not an easy way to determine when consonants are silent
+	$file = fopen("silentWords.txt","r");	
 	while(! feof($file))
 	{
 		$word = fgets($file, 4096);
@@ -12,6 +12,7 @@ function LoadSilentWords(&$silentWords){
 	}
 }
 
+//check, if word starts with vowel or silent consonant
 function CheckFirstChar(&$silentWords, &$vowels, $input){
 	foreach($silentWords as $item){		//check usual words that starts with silent letter
 		if (strcmp($item, $input) == 2) {
@@ -27,25 +28,22 @@ function CheckFirstChar(&$silentWords, &$vowels, $input){
 	return false;
 }
 
-
-// print_r($space);
-
-if (!empty($input)) {
-
-	$multipleInput = explode(" ", $input);
-	// echo(count($multipleInput));
+	$multipleInput = explode(" ", $input);	//in case of multiple words, go one by one
 	foreach($multipleInput as $input){
+		if (!empty($input)) {
 
-		// echo $input;
 
-		$silentWords = array();
-		$vowels = array("a", "e", "i", "o", "u");
-		$hasVowel = false;
-		$suffix = "'way";
-		$counter = 0;	
-		$prefix = "";
+			$silentWords = array();
+			$vowels = array("a", "e", "i", "o", "u");
+			$hasVowel = false;
+			$suffix = array("'way","'yay","'hay");
+			$counter = 0;	
+			$prefix = "";
 
-		LoadSilentWords($silentWords);
+			$random = rand(0,2);
+			$suffix = $suffix[$random];
+
+			LoadSilentWords($silentWords);
 		if (CheckFirstChar($silentWords, $vowels, $input)) { //determines, if input word needs cutting
 			$result = $input . $suffix;
 		}else{
@@ -71,5 +69,5 @@ if (!empty($input)) {
 		$output = $output . " " . $result;
 	}
 }
-	echo $output;	//print translated word
+	echo $output;	//print translated words
 	?>

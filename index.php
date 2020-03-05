@@ -20,6 +20,6 @@
 		</div>
 		<input type="button" id="submitFormData" class="btn btn-primary" onclick="SubmitForm();" value="Translate" />
 	</form>
-	<div class="alert alert-primary" role="alert" id="results">	- </div>
+	<div class="alert alert-primary" role="alert" id="results">	&nbsp </div>
 </body>
 </html>
